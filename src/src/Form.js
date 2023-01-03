@@ -52,6 +52,7 @@ export default {
               response.data[i].limInf < this.ingresoData &&
               response.data[i].limSup > this.ingresoData
             ) {
+              this.mostrar = limInf;
               this.limInf = limInf;
               let base = this.ingresoData - limInf;
               let impuestoMarginal = base * porcentaje;
