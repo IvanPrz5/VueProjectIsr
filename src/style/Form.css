@@ -1,5 +1,25 @@
-.isr-label{
-  border: 1px solid rgb(165, 157, 157);
-  padding: 7px;
-  border-radius: 5px;
+.container{
+  display: flex;
+}
+.brutoForm{
+  max-width: 50%;
+}
+.netoForm{
+  max-width: 50%;
+}
+.btn-container{
+  margin-bottom: 27px;
+}
+
+@media(max-width:500px){
+  .container{
+    display: table-column;
+  }
+  .brutoForm{
+    min-width: 100%
+  }
+  .netoForm{
+    min-width: 100%;
+  }
+
 }
