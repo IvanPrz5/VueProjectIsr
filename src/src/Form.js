@@ -7,7 +7,6 @@ export default {
     return {
       isrData2: "",
       netoData: "",
-      brutoData: "",
       diasData: "",
       añoData: "",
       periodoData: "",

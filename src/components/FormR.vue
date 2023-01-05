@@ -25,14 +25,15 @@
       <v-btn depressed color="primary" @click="calculaIsr()"> Calcular </v-btn>
     </div>
     <v-text-field
-      v-model="brutoData"
-      label="Bruto"
+      class="isrData"
+      v-model="isrData"
+      label="Isr"
       outlined
       dense
       readonly
     ></v-text-field>
     <v-text-field
-      v-model="brutoData2"
+      v-model="brutoData"
       label="Bruto"
       outlined
       dense
@@ -44,6 +45,7 @@
 </template>
 
 <script>
+import { allGeneratedPositionsFor } from "@jridgewell/trace-mapping";
 import axios from "axios";
 
 export default {
@@ -64,15 +66,16 @@ export default {
         "2022",
         "2023",
       ],
-      periodo: ["Anual", "Mensual", "Quincenal", "Semanal", "Diario"],
+      periodo: ["Mensual", "Quincenal", "Semanal", "Diario"],
       netoData: "",
       brutoData: "",
-      brutoData2: "",
+      isrData: "",
       result: null,
     };
   },
   methods: {
     calculaIsr() {
+      //this.$refs.created();
       axios
         .get(
           "http://localhost:8081/Isr/año/" +
@@ -83,31 +86,32 @@ export default {
         .then((response) => {
           this.result = response.data;
           for (let i = 0; i < this.result.length; i++) {
-            //console.log(response.data[i].limInf);
-            let parse = parseFloat(this.netoData);
-            let number = parseFloat(this.netoData) * 2;
-            for (let j = parse; j <= number; j += 0.01) {
-              let limInf = response.data[i].limInf;
-              let porcentaje = response.data[i].porcentaje;
-              let cuota = response.data[i].cuota;
-              if (response.data[i].limInf < j && response.data[i].limSup > j) {
-                this.limInf = limInf;
-                let base = j - limInf;
-                let impuestoMarginal = base * porcentaje;
-                let isrData = impuestoMarginal + cuota;
-                this.brutoData = j - isrData;
-                this.brutoData = this.brutoData.toFixed(2);
-                /* console.log(j.toFixed(2));
-                console.log(isrData.toFixed(2))
-                console.log(this.brutoData) */
-                if (this.netoData === this.brutoData) {
-                  this.brutoData2 = j.toFixed(2);
-                }
-              }
+            let netoParse = parseFloat(this.netoData);
+            let number = this.netoData * 2;
+            let limInf = response.data[i].limInf;
+            let porcentaje = response.data[i].porcentaje;
+            let cuota = response.data[i].cuota;
+            if (
+              response.data[i].limInf < number &&
+              response.data[i].limSup > number
+            ) {
+              this.limInf = limInf;
+              let base = number - limInf;
+              let impuestoMarginal = base * porcentaje;
+              let isrData = impuestoMarginal + cuota;
+              number = netoParse + isrData;
+              console.log(number.toFixed(2));
             }
           }
+        })
+        .catch((error) => {
+          /* alert("Error"); */
         });
     },
   },
 };
 </script>
+
+<style scoped>
+@import "../style/FormR.css";
+</style>

@@ -22,7 +22,6 @@
     this.netoData = this.ingresoData - this.isrData;
     this.netoData = this.netoData.toFixed(2); */
 
-
 /* calculaIsr() {
   let parse = parseFloat(this.netoData);
   let number = parseFloat(this.netoData) * 2;
@@ -75,3 +74,25 @@
   }
 },
  */
+
+/* let parse = parseFloat(this.netoData);
+let number = parseFloat(this.netoData) * 1.5;
+for (let j = parse; j <= number; j += 0.01) {
+  let limInf = response.data[i].limInf;
+  let porcentaje = response.data[i].porcentaje;
+  let cuota = response.data[i].cuota;
+  if (response.data[i].limInf < j && response.data[i].limSup > j) {
+    this.limInf = limInf;
+    let base = j - limInf;
+    let impuestoMarginal = base * porcentaje;
+    let isrData = impuestoMarginal + cuota;
+    this.isrData = j - isrData;
+    this.isrData = this.isrData.toFixed(2);
+    if (this.netoData == this.isrData) {
+      this.brutoData = j.toFixed(2);
+    }
+  }
+} */ 
+
+
+
